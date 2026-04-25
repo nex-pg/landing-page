@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1240" />
+<title>PlayLab Design — デザインで、ビジネスをワクワクに。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Yusei+Magic&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1f2e;
+    --ink-2:#3b4255;
+    --pink:#ff5fa2;
+    --pink-soft:#ffb7d4;
+    --blue:#52b6e8;
+    --mint:#9be3c8;
+    --yellow:#ffe34a;
+    --yellow-deep:#ffd233;
+    --purple:#b48cff;
+    --bg:#fffdf6;
+    --line:#1a1f2e;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;position:relative}
+  .script{font-family:"Caveat", cursive;font-weight:700;color:var(--pink)}
+  .pacifico{font-family:"Pacifico", cursive;color:var(--pink)}
+
+  /* ===== NAV ===== */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,253,246,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(26,31,46,.06);
+  }
+  .nav-inner{
+    max-width:1240px;margin:0 auto;padding:14px 32px;
+    display:flex;align-items:center;gap:48px;
+  }
+  .logo{display:flex;align-items:center;gap:8px}
+  .logo img{height:46px;width:auto}
+  .nav-links{display:flex;gap:36px;font-size:14px;font-weight:500;flex:1}
+  .nav-links a:hover{color:var(--pink)}
+  .nav-cta{
+    background:var(--yellow);
+    border:2px solid var(--ink);
+    border-radius:999px;
+    padding:10px 22px 10px 22px;
+    font-weight:700;font-size:14px;
+    display:inline-flex;align-items:center;gap:10px;
+    box-shadow:3px 3px 0 var(--ink);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .nav-cta:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+  .nav-cta .arr{
+    width:22px;height:22px;border-radius:50%;
+    background:var(--ink);color:var(--yellow);
+    display:grid;place-items:center;font-size:12px;
+  }
+
+  /* ===== HERO ===== */
+  .hero{position:relative;padding:60px 0 80px;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+  .hero h1{
+    font-family:"Zen Kaku Gothic New", sans-serif;
+    font-weight:900;
+    font-size:80px;line-height:1.12;letter-spacing:-.02em;
+    margin:0 0 28px;
+    position:relative;z-index:2;
+  }
+  .hero h1 .wakuwaku{
+    color:var(--pink);
+    background:linear-gradient(180deg, transparent 60%, #ffe34a55 60%);
+    padding:0 4px;
+  }
+  .hero h1 .accent-dot{color:var(--purple)}
+  .hero p.lead{
+    font-size:16px;line-height:2;color:var(--ink-2);
+    margin:0 0 36px;max-width:460px;position:relative;z-index:2;
+  }
+  .hero-ctas{display:flex;gap:20px;align-items:center;position:relative;z-index:2}
+  .btn-primary{
+    background:var(--yellow);
+    border:2px solid var(--ink);
+    border-radius:999px;
+    padding:16px 32px;
+    font-weight:700;font-size:15px;
+    display:inline-flex;align-items:center;gap:14px;
+    box-shadow:4px 4px 0 var(--ink);
+    transition:transform .15s, box-shadow .15s;
+    cursor:pointer;
+  }
+  .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+  .btn-primary .arr{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:var(--yellow);
+    display:grid;place-items:center;font-size:13px;
+  }
+  .btn-play{
+    display:inline-flex;align-items:center;gap:14px;
+    font-weight:700;font-size:14px;
+    background:transparent;border:none;cursor:pointer;
+    color:var(--ink);
+  }
+  .btn-play .play-circle{
+    width:48px;height:48px;border-radius:50%;
+    background:#fff;border:2px solid var(--ink);
+    display:grid;place-items:center;
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  .btn-play .play-circle::after{
+    content:"";display:block;width:0;height:0;
+    border-left:11px solid var(--ink);
+    border-top:7px solid transparent;
+    border-bottom:7px solid transparent;
+    margin-left:3px;
+  }
+
+  /* hero photo blob */
+  .hero-photo{
+    position:relative;width:100%;aspect-ratio:1/1;max-width:560px;margin-left:auto;
+  }
+  .hero-photo .photo-mask{
+    position:absolute;inset:6%;
+    border-radius:54% 46% 60% 40% / 50% 56% 44% 50%;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffd0e2,#cfe9f7);
+  }
+  .hero-photo .photo-mask .photo-img{
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
+  .hero-photo .lets-make{
+    position:absolute;right:-24px;bottom:8%;
+    font-family:"Caveat", cursive;font-weight:700;color:var(--pink);
+    font-size:34px;line-height:1;transform:rotate(-6deg);text-align:center;
+  }
+  .hero-photo .lets-make small{display:block;font-size:30px}
+
+  /* hero floating sozai */
+  .float{position:absolute;pointer-events:none;z-index:1}
+  .h-blob-pink{top:90px;left:-90px;width:230px;opacity:.9}
+  .h-blob-mint{top:280px;left:-40px;width:120px}
+  .h-blob-yellow{bottom:60px;left:120px;width:140px;transform:rotate(-15deg)}
+  .h-blob-purple{top:30px;right:-60px;width:160px;opacity:.85}
+  .h-spark-1{top:60px;left:48%;width:46px}
+  .h-spark-2{bottom:160px;right:8%;width:40px}
+  .h-squig-1{top:0;right:30%;width:80px;opacity:.8}
+  .h-arrow-1{bottom:120px;right:-10px;width:80px}
+  .h-dots{top:200px;right:42%;width:90px;opacity:.7}
+  .h-hearts{bottom:0;left:42%;width:100px}
+
+  /* ===== SECTION HEADER ===== */
+  .section{position:relative;padding:90px 0}
+  .section-head{margin-bottom:48px;position:relative}
+  .section-head .script-label{
+    font-family:"Pacifico", cursive;
+    color:var(--pink);
+    font-size:54px;line-height:1;
+    margin:0 0 8px;
+  }
+  .section-head .ja{
+    font-weight:700;font-size:15px;letter-spacing:.05em;color:var(--ink);
+  }
+  .section-head .ja::before{
+    content:"";display:inline-block;width:24px;height:2px;background:var(--ink);
+    vertical-align:middle;margin-right:10px;transform:translateY(-2px);
+  }
+
+  /* ===== SERVICES ===== */
+  .services{background:var(--bg);position:relative}
+  .svc-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative;z-index:2;
+  }
+  .svc{
+    position:relative;padding:30px 22px 28px;
+    text-align:center;
+  }
+  .svc .blob{
+    position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+    width:200px;height:140px;z-index:0;
+  }
+  .svc .icon{
+    position:relative;z-index:1;
+    width:120px;height:120px;margin:10px auto 18px;
+    display:grid;place-items:center;
+  }
+  .svc .icon svg{width:100%;height:100%}
+  .svc .script-title{
+    font-family:"Pacifico", cursive;font-size:32px;line-height:1;
+    margin:0 0 6px;position:relative;z-index:1;
+  }
+  .svc:nth-child(1) .script-title{color:var(--pink)}
+  .svc:nth-child(2) .script-title{color:var(--blue)}
+  .svc:nth-child(3) .script-title{color:#e6b400}
+  .svc:nth-child(4) .script-title{color:var(--purple)}
+  .svc h3{
+    font-size:18px;margin:6px 0 10px;font-weight:700;
+    position:relative;z-index:1;
+  }
+  .svc p{
+    font-size:13px;line-height:1.9;color:var(--ink-2);margin:0 0 18px;
+    position:relative;z-index:1;
+  }
+  .svc .more{
+    width:36px;height:36px;border-radius:50%;
+    background:#fff;border:2px solid var(--ink);
+    display:grid;place-items:center;margin:0 auto;
+    box-shadow:2px 2px 0 var(--ink);
+    position:relative;z-index:1;
+    font-size:13px;
+  }
+
+  /* ===== WORKS ===== */
+  .works{position:relative}
+  .works-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px}
+  .works-link{
+    display:inline-flex;align-items:center;gap:12px;
+    font-weight:600;font-size:14px;
+  }
+  .works-link .arr{
+    width:30px;height:30px;border-radius:50%;
+    background:var(--pink);color:#fff;display:grid;place-items:center;
+    box-shadow:2px 2px 0 var(--ink);
+    font-size:12px;
+  }
+  .works-grid{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:18px;
+  }
+  .work-card{display:flex;flex-direction:column;gap:10px}
+  .work-thumb{
+    aspect-ratio:1/1;border-radius:50%;
+    overflow:hidden;position:relative;
+    background:linear-gradient(135deg,#e9eef5,#fafbfd);
+    border:1px solid rgba(26,31,46,.05);
+  }
+  .work-thumb::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(45deg,
+      rgba(0,0,0,0) 0 18px, rgba(0,0,0,.04) 18px 19px);
+  }
+  .work-thumb .label{
+    position:absolute;inset:0;display:grid;place-items:center;
+    font-family:"Yusei Magic", monospace;font-size:11px;
+    color:#6a7385;letter-spacing:.08em;text-align:center;padding:16%;
+  }
+  .work-thumb.tone-1{background:linear-gradient(135deg,#dff0e6,#fff5d9)}
+  .work-thumb.tone-2{background:linear-gradient(135deg,#dde8f5,#f3e6f5)}
+  .work-thumb.tone-3{background:linear-gradient(135deg,#f5ebe2,#e8f1e9)}
+  .work-thumb.tone-4{background:linear-gradient(135deg,#1f2638,#3a4661);color:#fff}
+  .work-thumb.tone-4 .label{color:#dfe5f0}
+  .work-thumb.tone-5{background:linear-gradient(135deg,#f0e9d8,#ecddd0)}
+  .work-card h4{font-size:15px;margin:6px 0 0;font-weight:700}
+  .work-card .meta{font-size:11px;color:#8a91a3;margin:2px 0 0}
+  .work-card .tag{font-size:11px;color:var(--pink);font-weight:700;margin:2px 0 0}
+
+  /* ===== STRENGTHS ===== */
+  .strengths{background:#fff;position:relative}
+  .str-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative;z-index:2}
+  .str{padding-right:8px}
+  .str .top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+  .str .ico{
+    width:44px;height:44px;border-radius:50%;
+    border:2px solid var(--ink);background:#fff;
+    display:grid;place-items:center;flex-shrink:0;
+  }
+  .str .num{
+    font-family:"Pacifico", cursive;font-size:36px;line-height:1;
+    color:var(--pink);
+  }
+  .str:nth-child(2) .num{color:var(--blue)}
+  .str:nth-child(3) .num{color:#e6b400}
+  .str:nth-child(4) .num{color:var(--purple)}
+  .str h3{font-size:17px;margin:0 0 12px;font-weight:700;line-height:1.5}
+  .str p{font-size:13px;line-height:1.9;color:var(--ink-2);margin:0}
+
+  /* ===== PRICING ===== */
+  .pricing{position:relative}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative;z-index:2}
+  .price{
+    background:#fff;
+    border:2px solid var(--ink);
+    border-radius:24px;
+    padding:36px 28px 32px;
+    position:relative;
+    box-shadow:5px 5px 0 var(--ink);
+  }
+  .price .tag-script{
+    font-family:"Pacifico", cursive;font-size:42px;line-height:1;
+    text-align:center;margin:0 0 6px;
+  }
+  .price.tier-1 .tag-script{color:var(--blue)}
+  .price.tier-2 .tag-script{color:var(--pink)}
+  .price.tier-3 .tag-script{color:var(--purple)}
+  .price .blurb{
+    text-align:center;font-size:12px;color:var(--ink-2);margin:0 0 18px;
+  }
+  .price .amount{
+    text-align:center;font-size:30px;font-weight:900;letter-spacing:-.01em;
+    margin:0 0 22px;
+  }
+  .price .amount small{font-size:14px;font-weight:700;margin-left:2px}
+  .price ul{
+    list-style:none;padding:0;margin:0 0 22px;
+    border-top:1px dashed rgba(26,31,46,.2);
+  }
+  .price li{
+    padding:14px 4px;border-bottom:1px dashed rgba(26,31,46,.2);
+    font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;
+  }
+  .price li::before{
+    content:"";width:14px;height:14px;border-radius:50%;
+    background:var(--mint);flex-shrink:0;
+  }
+  .price.tier-2 li::before{background:var(--pink-soft)}
+  .price.tier-3 li::before{background:#dac6ff}
+  .price .cta{
+    display:block;text-align:center;
+    background:var(--mint);color:var(--ink);
+    border:2px solid var(--ink);border-radius:999px;
+    padding:12px;font-weight:700;font-size:13px;
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  .price.tier-2 .cta{background:var(--pink);color:#fff}
+  .price.tier-3 .cta{background:var(--purple);color:#fff}
+  .price .popular{
+    position:absolute;top:-16px;left:50%;transform:translateX(-50%) rotate(-4deg);
+    background:var(--yellow);border:2px solid var(--ink);
+    padding:6px 18px;border-radius:999px;
+    font-family:"Caveat", cursive;font-weight:700;font-size:18px;
+    box-shadow:2px 2px 0 var(--ink);
+  }
+
+  .price-illust{
+    margin:36px 0 0;display:flex;align-items:center;justify-content:flex-end;gap:18px;
+    position:relative;z-index:2;
+  }
+  .price-illust .bubble{
+    background:#fff;border:2px solid var(--ink);
+    border-radius:18px;padding:12px 18px;
+    font-family:"Caveat", cursive;font-weight:700;font-size:22px;
+    color:var(--pink);box-shadow:3px 3px 0 var(--ink);
+    display:inline-block;position:relative;
+  }
+  .price-illust .bubble::after{
+    content:"";position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+    width:0;height:0;border-left:12px solid #fff;
+    border-top:8px solid transparent;border-bottom:8px solid transparent;
+    filter:drop-shadow(2px 0 0 var(--ink));
+  }
+  .price-illust img{width:120px}
+
+  /* ===== FAQ ===== */
+  .faq{position:relative;background:#fff}
+  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 36px}
+  .qa{
+    border-bottom:1px solid rgba(26,31,46,.15);
+    padding:18px 6px;
+    display:flex;align-items:flex-start;gap:14px;
+    cursor:pointer;
+  }
+  .qa .q{
+    font-family:"Pacifico", cursive;color:var(--pink);
+    font-size:22px;line-height:1;flex-shrink:0;
+  }
+  .qa .text{flex:1;font-size:14px;font-weight:600;line-height:1.6}
+  .qa .plus{font-size:20px;color:var(--ink);font-weight:300;line-height:1}
+
+  /* ===== CTA BAND ===== */
+  .cta-band{
+    position:relative;background:var(--yellow);
+    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    padding:50px 0;overflow:hidden;
+  }
+  .cta-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:40px;
+    position:relative;z-index:2;
+  }
+  .cta-inner h2{
+    font-size:36px;font-weight:900;line-height:1.4;margin:0 0 8px;
+  }
+  .cta-inner p{margin:0;font-size:14px;color:var(--ink-2)}
+  .cta-band .btn-dark{
+    background:var(--ink);color:#fff;
+    border:2px solid var(--ink);border-radius:999px;
+    padding:18px 40px;font-weight:700;font-size:15px;
+    display:inline-flex;align-items:center;gap:14px;
+    box-shadow:4px 4px 0 var(--ink);
+    flex-shrink:0;
+  }
+  .cta-band .btn-dark .arr{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--yellow);color:var(--ink);
+    display:grid;place-items:center;font-size:12px;
+  }
+  .cta-band .float-spark{position:absolute;width:60px;z-index:1}
+
+  /* ===== FOOTER ===== */
+  footer{padding:48px 0 60px;background:var(--bg)}
+  .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:40px}
+  .foot-links{display:flex;gap:32px;font-size:13px;font-weight:500}
+  .foot-social{display:flex;gap:18px}
+  .foot-social a{
+    width:32px;height:32px;border-radius:50%;
+    border:1.5px solid var(--ink);display:grid;place-items:center;
+    font-size:14px;
+  }
+  footer .logo img{height:48px}
+  .foot-bottom{
+    margin-top:30px;text-align:center;font-size:11px;color:#8a91a3;
+  }
+
+  /* decorative position helpers (sections) */
+  .deco{position:absolute;pointer-events:none;z-index:1}
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#"><img src="assets/10-01_logo-play-design.png" alt="PlayLab Design"></a>
+    <nav class="nav-links">
+      <a href="#services">サービス</a>
+      <a href="#works">制作実績</a>
+      <a href="#strengths">私たちの強み</a>
+      <a href="#pricing">料金プラン</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="nav-cta" href="#contact">無料で相談する <span class="arr">→</span></a>
+  </div>
+</header>
+
+<!-- ============== HERO ============== -->
+<section class="hero">
+  <img class="float h-blob-pink" src="assets/01-01_blob-pink.png" alt="">
+  <img class="float h-blob-mint" src="assets/01-02_blob-mint.png" alt="">
+  <img class="float h-blob-yellow" src="assets/01-03_blob-yellow.png" alt="">
+  <img class="float h-blob-purple" src="assets/01-04_blob-purple.png" alt="">
+  <img class="float h-spark-1" src="assets/05-05_spark-pink-1.png" alt="">
+  <img class="float h-spark-2" src="assets/05-06_spark-blue.png" alt="">
+  <img class="float h-squig-1" src="assets/08-05_squiggle-yellow.png" alt="">
+  <img class="float h-arrow-1" src="assets/05-04_arrow-yellow-curved.png" alt="">
+  <img class="float h-dots" src="assets/06-04_dots-pattern-1.png" alt="">
+  <img class="float h-hearts" src="assets/11-06_hearts-blue-pink.png" alt="">
+
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <h1>
+          デザインで、<br>
+          ビジネスを<br>
+          <span class="wakuwaku">ワクワクに<span class="accent-dot">。</span></span>
+        </h1>
+        <p class="lead">
+          ブランディングとUI/UXで、あなたのビジネスの<br>
+          未来を描き、成長をデザインします。
+        </p>
+        <div class="hero-ctas">
+          <a class="btn-primary" href="#contact">無料で相談する <span class="arr">→</span></a>
+          <button class="btn-play"><span class="play-circle"></span>私たちの想いを見る</button>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <div class="photo-mask">
+          <img class="photo-img" src="assets/team-photo.jpg" alt="チームミーティング">
+        </div>
+        <div class="lets-make">
+          Let's make<br>
+          Awesome<br>
+          <small>Things !</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SERVICES ============== -->
+<section class="section services" id="services">
+  <img class="deco" src="assets/06-04_dots-pattern-1.png" style="top:30px;right:6%;width:80px;opacity:.7" alt="">
+  <img class="deco" src="assets/05-05_spark-pink-1.png" style="top:80px;left:8%;width:36px" alt="">
+
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="script-label">Services</h2>
+      <div class="ja">サービス紹介</div>
+    </div>
+
+    <div class="svc-grid">
+      <div class="svc">
+        <img class="blob" src="assets/01-06_blob-light-pink.png" alt="">
+        <div class="icon">
+          <!-- branding icon: paint / triangle -->
+          <svg viewBox="0 0 120 120" fill="none">
+            <polygon points="60,18 96,96 24,96" fill="#ff5fa2" stroke="#1a1f2e" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="60" cy="58" r="6" fill="#fff" stroke="#1a1f2e" stroke-width="2"/>
+            <path d="M40 96 Q 60 86 80 96" stroke="#1a1f2e" stroke-width="2.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="script-title">Branding</div>
+        <h3>ブランディング</h3>
+        <p>唯一無二の世界観を、選ばれるブランドへと育てます。</p>
+        <div class="more">→</div>
+      </div>
+
+      <div class="svc">
+        <img class="blob" src="assets/01-02_blob-mint.png" alt="">
+        <div class="icon">
+          <!-- ui/ux icon: phone -->
+          <svg viewBox="0 0 120 120" fill="none">
+            <rect x="36" y="14" width="48" height="92" rx="8" fill="#fff" stroke="#1a1f2e" stroke-width="3"/>
+            <rect x="44" y="26" width="32" height="46" rx="3" fill="#52b6e8"/>
+            <circle cx="60" cy="92" r="4" fill="none" stroke="#1a1f2e" stroke-width="2"/>
+            <rect x="50" y="30" width="20" height="3" rx="1.5" fill="#fff"/>
+            <rect x="50" y="38" width="14" height="3" rx="1.5" fill="#fff" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="script-title">UI / UX Design</div>
+        <h3>UI/UXデザイン</h3>
+        <p>使いやすく、心地よい体験でビジネスを加速させます。</p>
+        <div class="more">→</div>
+      </div>
+
+      <div class="svc">
+        <img class="blob" src="assets/01-03_blob-yellow.png" alt="">
+        <div class="icon">
+          <!-- web icon: laptop -->
+          <svg viewBox="0 0 120 120" fill="none">
+            <rect x="20" y="32" width="80" height="52" rx="4" fill="#fff" stroke="#1a1f2e" stroke-width="3"/>
+            <rect x="28" y="40" width="64" height="36" fill="#ffe34a"/>
+            <rect x="14" y="84" width="92" height="8" rx="3" fill="#fff" stroke="#1a1f2e" stroke-width="3"/>
+            <rect x="34" y="46" width="28" height="3" fill="#1a1f2e"/>
+            <rect x="34" y="54" width="40" height="3" fill="#1a1f2e" opacity=".5"/>
+            <rect x="34" y="62" width="20" height="3" fill="#1a1f2e" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="script-title">Web Design</div>
+        <h3>Webデザイン・開発</h3>
+        <p>企業サイトからLPまで、戦略的に設計し成果へ繋げます。</p>
+        <div class="more">→</div>
+      </div>
+
+      <div class="svc">
+        <img class="blob" src="assets/01-04_blob-purple.png" alt="">
+        <div class="icon">
+          <!-- graphic icon: book / poster -->
+          <svg viewBox="0 0 120 120" fill="none">
+            <rect x="28" y="22" width="64" height="80" rx="3" fill="#fff" stroke="#1a1f2e" stroke-width="3"/>
+            <circle cx="60" cy="50" r="14" fill="#b48cff"/>
+            <rect x="40" y="74" width="40" height="3" fill="#1a1f2e"/>
+            <rect x="40" y="82" width="28" height="3" fill="#1a1f2e" opacity=".5"/>
+            <rect x="40" y="90" width="34" height="3" fill="#1a1f2e" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="script-title">Graphic Design</div>
+        <h3>グラフィックデザイン</h3>
+        <p>印象に残るビジュアルでブランドの世界観を伝えます。</p>
+        <div class="more">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WORKS ============== -->
+<section class="section works" id="works">
+  <img class="deco" src="assets/05-05_spark-pink-1.png" style="top:60px;right:18%;width:34px" alt="">
+  <img class="deco" src="assets/06-03_spark-yellow.png" style="bottom:80px;left:4%;width:40px" alt="">
+
+  <div class="wrap">
+    <div class="works-head">
+      <div class="section-head" style="margin-bottom:0">
+        <h2 class="script-label">Works</h2>
+        <div class="ja">制作実績</div>
+      </div>
+      <a class="works-link" href="#">すべての実績を見る <span class="arr">→</span></a>
+    </div>
+
+    <div class="works-grid">
+      <div class="work-card">
+        <div class="work-thumb tone-1"><div class="label">[ mobile app<br>brand ]</div></div>
+        <h4>Greenly</h4>
+        <div class="meta">サステナビリティアプリの<br>ブランディング・UI/UX</div>
+        <div class="tag">Branding / UI/UX</div>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb tone-2"><div class="label">[ saas dashboard<br>screenshot ]</div></div>
+        <h4>MileBoost</h4>
+        <div class="meta">SaaSプロダクトの<br>Webデザイン・開発</div>
+        <div class="tag">Web Design</div>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb tone-3"><div class="label">[ skincare<br>packaging ]</div></div>
+        <h4>Hana Organic</h4>
+        <div class="meta">オーガニックコスメの<br>ブランドデザイン</div>
+        <div class="tag">Branding / Graphic</div>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb tone-4"><div class="label">[ corporate<br>website hero ]</div></div>
+        <h4>NextLeap</h4>
+        <div class="meta">スタートアップの<br>コーポレートサイト制作</div>
+        <div class="tag">Web Design</div>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb tone-5"><div class="label">[ booklet<br>spread ]</div></div>
+        <h4>&amp;Co.</h4>
+        <div class="meta">採用ツールの<br>パンフレットデザイン</div>
+        <div class="tag">Graphic</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== STRENGTHS ============== -->
+<section class="section strengths" id="strengths">
+  <img class="deco" src="assets/08-03_squiggle-blue-wave.png" style="top:50px;right:2%;width:160px;opacity:.6" alt="">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="script-label" style="color:var(--blue)">Strengths</h2>
+      <div class="ja">私たちの強み</div>
+    </div>
+
+    <div class="str-grid">
+      <div class="str">
+        <div class="top">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a1f2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+          </div>
+          <div class="num">01</div>
+        </div>
+        <h3>ビジネスを理解するデザイン</h3>
+        <p>課題のお話をする前にまず、ビジネスを理解する。戦略から作るデザインを得て継続的に成果を上げていきます。</p>
+      </div>
+
+      <div class="str">
+        <div class="top">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#52b6e8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div class="num">02</div>
+        </div>
+        <h3>課題発見からのプロセス設計</h3>
+        <p>リサーチと仮説検証を重ね、効果を最大化するプロセスを設計。手戻りなく価値ある成果へと繋げます。</p>
+      </div>
+
+      <div class="str">
+        <div class="top">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e6b400" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c.5-3 3-5 6-5s5.5 2 6 5"/><path d="M14 20c.4-2.4 2.2-4 4-4"/></svg>
+          </div>
+          <div class="num">03</div>
+        </div>
+        <h3>スタートアップ支援実績多数</h3>
+        <p>多くのスタートアップの成長をデザインで伴走してきた経験。0→1の壁打ちから二人三脚で進めます。</p>
+      </div>
+
+      <div class="str">
+        <div class="top">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b48cff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>
+          </div>
+          <div class="num">04</div>
+        </div>
+        <h3>スピーディーで柔軟な対応</h3>
+        <p>変化の早いビジネス環境にあわせ、迅速かつ柔軟にお応え。最短2週間でリリースした実績もあります。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRICING ============== -->
+<section class="section pricing" id="pricing">
+  <img class="deco" src="assets/01-05_blob-mint-pink.png" style="top:60px;left:-80px;width:200px;opacity:.8" alt="">
+  <img class="deco" src="assets/01-03_blob-yellow.png" style="bottom:60px;left:-30px;width:120px;opacity:.7" alt="">
+
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="script-label" style="color:var(--purple)">Pricing</h2>
+      <div class="ja">料金プラン</div>
+    </div>
+
+    <div class="price-grid">
+      <div class="price tier-1">
+        <div class="tag-script">Starter</div>
+        <p class="blurb">はじめての方に向けて</p>
+        <div class="amount">¥300,000<small>〜</small></div>
+        <ul>
+          <li>LPデザイン</li>
+          <li>UI/UX設計</li>
+          <li>デザインガイドライン</li>
+        </ul>
+        <a class="cta" href="#">詳しく見る</a>
+      </div>
+
+      <div class="price tier-2">
+        <div class="popular">Popular!</div>
+        <div class="tag-script">Growth</div>
+        <p class="blurb">事業成長を加速したい方に</p>
+        <div class="amount">¥800,000<small>〜</small></div>
+        <ul>
+          <li>ブランディング設計</li>
+          <li>Webデザイン・開発</li>
+          <li>UI/UXデザイン</li>
+          <li>運用・改善サポート</li>
+        </ul>
+        <a class="cta" href="#">詳しく見る</a>
+      </div>
+
+      <div class="price tier-3">
+        <div class="tag-script">Scale</div>
+        <p class="blurb">組織・事業をスケールさせたい方に</p>
+        <div class="amount">¥1,500,000<small>〜</small></div>
+        <ul>
+          <li>ブランド戦略設計</li>
+          <li>Webサイト構築</li>
+          <li>UI/UXデザイン</li>
+          <li>運用・改善サポート</li>
+        </ul>
+        <a class="cta" href="#">詳しく見る</a>
+      </div>
+    </div>
+
+    <div class="price-illust">
+      <div class="bubble">まずは<br>お気軽にご相談を！</div>
+      <img src="assets/10-05_illust-girl-laptop.png" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section class="section faq" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="script-label" style="color:var(--yellow-deep);-webkit-text-stroke:1px var(--ink)">FAQ</h2>
+      <div class="ja">よくある質問</div>
+    </div>
+
+    <div class="faq-grid">
+      <div class="qa"><div class="q">Q.</div><div class="text">相談や見積もりは無料ですか？</div><div class="plus">+</div></div>
+      <div class="qa"><div class="q">Q.</div><div class="text">契約までの流れを教えてください。</div><div class="plus">+</div></div>
+      <div class="qa"><div class="q">Q.</div><div class="text">制作期間の目安はどのくらいですか？</div><div class="plus">+</div></div>
+      <div class="qa"><div class="q">Q.</div><div class="text">納品後のサポートはありますか？</div><div class="plus">+</div></div>
+      <div class="qa"><div class="q">Q.</div><div class="text">小さな案件でも依頼できますか？</div><div class="plus">+</div></div>
+      <div class="qa"><div class="q">Q.</div><div class="text">支払い方法について教えてください。</div><div class="plus">+</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CTA BAND ============== -->
+<section class="cta-band">
+  <img class="float-spark" src="assets/06-03_spark-yellow.png" style="top:20px;left:6%" alt="">
+  <img class="float-spark" src="assets/05-05_spark-pink-1.png" style="bottom:20px;right:8%;width:42px" alt="">
+  <img class="deco" src="assets/08-06_squiggle-pink-2.png" style="top:30px;right:30%;width:90px;opacity:.8" alt="">
+  <div class="wrap">
+    <div class="cta-inner">
+      <div>
+        <h2>一緒に、ワクワクする未来を<br>つくりましょう！</h2>
+        <p>デザインの力で、あなたのビジネスを次のステージへ。</p>
+      </div>
+      <a class="btn-dark" href="#contact">✉ 無料で相談する <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <a class="logo" href="#"><img src="assets/10-01_logo-play-design.png" alt="PlayLab Design"></a>
+      <nav class="foot-links">
+        <a href="#services">サービス</a>
+        <a href="#works">制作実績</a>
+        <a href="#strengths">私たちの強み</a>
+        <a href="#pricing">料金プラン</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="foot-social">
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="X">𝕏</a>
+        <a href="#" aria-label="Note">N</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 PlayLab Design.  All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
